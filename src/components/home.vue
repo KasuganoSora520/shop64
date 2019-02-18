@@ -14,7 +14,7 @@
         </el-col>
         <el-col :span="2">
           <div class="grid-content bg-purple">
-            <a href="#">退出</a>
+            <a href="#" @click.prevent="goout()">退出</a>
           </div>
         </el-col>
       </el-row>
@@ -22,14 +22,9 @@
     <el-container>
       <el-aside class="aside" width="200px">
         <el-col :span="12">
-          <el-menu
-            :unique-opened="true"
-            default-active="2"
-            class="el-menu-vertical-demo"
-           
-          > 
-          <!-- @open="handleOpen"
-            @close="handleClose" -->
+          <el-menu :unique-opened="true" default-active="2" class="el-menu-vertical-demo">
+            <!-- @open="handleOpen"
+            @close="handleClose"-->
             <el-submenu index="1">
               <template slot="title">
                 <i class="el-icon-location"></i>
@@ -111,7 +106,25 @@
 </template>
 
 <script>
-export default {}
+export default {
+  beforeMount() {
+    if (!localStorage.getItem("token")) {
+      this.$message.warning("请重新登录！");
+      this.$router.push({
+        name: "login"
+      });
+    }
+  },
+  methods: {
+    goout() {
+      localStorage.clear();
+      this.$router.push({
+        name: "login"
+      });
+      this.$message.warning("请重新登录！");
+    }
+  }
+};
 </script>
 
 <style>

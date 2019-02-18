@@ -27,7 +27,7 @@ export default {
   methods: {
     handleLogin() {
       this.$http.post(`login`, this.formdata).then(res => {
-        console.log(res);
+        // console.log(res);
         const {
           data: {
             data,
