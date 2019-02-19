@@ -13,16 +13,21 @@
       </el-input>
       <el-button type="warning">添加用户</el-button>
     </div>
-    <el-table :data="list" height="250" border style="width: 100%" class="users-table" :align="center">
-      <el-table-column prop="id" label="#" width="80" :align="center"></el-table-column>
-      <el-table-column prop="username" label="用户" width="180" :align="center"></el-table-column>
-      <el-table-column prop="email" label="邮箱" width="180" :align="center"></el-table-column>
-      <el-table-column prop="mobile" label="电话" width="180" :align="center"></el-table-column>
-      <el-table-column prop="create_time" label="创建日期" width="180" :align="center"></el-table-column>
-      <el-table-column prop="name" label="用户状态" width="180" :align="center">
-        <el-switch v-model="value2" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
+    <el-table :data="list" height="250" border style="width: 100%" class="users-table">
+      <el-table-column prop="id" label="#" width="80"></el-table-column>
+      <el-table-column prop="username" label="用户" width="180"></el-table-column>
+      <el-table-column prop="email" label="邮箱" width="180"></el-table-column>
+      <el-table-column prop="mobile" label="电话" width="180"></el-table-column>
+      <el-table-column prop="create_time" label="创建日期" width="180"></el-table-column>
+      <el-table-column prop="name" label="用户状态" width="180">
+        <el-switch
+          v-model="value2"
+          active-color="#13ce66"
+          inactive-color="#ff4949"
+          @change="changeusers()"
+        ></el-switch>
       </el-table-column>
-      <el-table-column prop="address" label="操作" :align="center">
+      <el-table-column prop="address" label="操作">
         <el-button type="primary" icon="el-icon-edit" circle size="mini" :plain="true"></el-button>
         <el-button type="danger" icon="el-icon-delete" circle size="mini" :plain="true"></el-button>
         <el-button type="success" icon="el-icon-check" circle size="mini" :plain="true"></el-button>
@@ -32,11 +37,11 @@
       <el-pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
-        :current-page="currentPage4"
+        :current-page="pagenum"
         :page-sizes="[2, 4, 6, 8]"
-        :page-size="12"
+        :page-size="6"
         layout="total, sizes, prev, pager, next, jumper"
-        :total="666"
+        :total="total"
       ></el-pagination>
     </div>
   </el-card>
@@ -50,12 +55,12 @@ export default {
       value2: "",
       query: "",
       input5: "",
+      total: -1,
+      length: this.length,
       list: [],
       currentPage4: 1,
       pagenum: 1,
-      pagesize: 2,
-      handleSizeChange: "",
-      handleCurrentChange: ""
+      pagesize: 6
     };
   },
   created() {
@@ -70,14 +75,41 @@ export default {
           this.pagesize
         }`
       );
-      console.log(res);
+      // console.log(res);
       const {
         data,
         meta: { msg, status }
       } = res.data;
       if (status === 200) {
+        this.total = data.total;
         this.list = res.data.data.users;
-        console.log(this.list);
+        // console.log(this.list);
+      }
+    },
+    handleSizeChange(val) {
+      console.log(`当前${val}页`);
+    },
+    handleCurrentChange(val) {
+      console.log(`当前页${val}页`);
+    },
+    async changeusers(user) {
+      const res = await this.$http.put(
+        `users/${user.id}/state/${user.mg_state}`
+      );
+    },
+    async edutUser() {
+      const res = await this.$http.put(
+        `users/${this.formdata.id}}`,
+        this.formdata
+      );
+      const {
+        data,
+        meta: { msg, status }
+      } = res.data;
+      if (status === 200) {
+        this.total = data.total;
+        this.list = res.data.data.users;
+        // console.log(this.list);
       }
     }
   }
