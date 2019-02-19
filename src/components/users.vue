@@ -107,8 +107,8 @@ export default {
         meta: { msg, status }
       } = res.data;
       if (status === 200) {
-        // this.total = data.total;
-        // this.list = res.data.data.users;
+        this.total = data.total;
+        this.list = res.data.data.users;
         // console.log(this.list);
       }
     }
