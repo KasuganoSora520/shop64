@@ -1,7 +1,7 @@
 <template>
   <el-container class="container">
     <el-header>
-      <el-row>
+      <el-row class="home-head">
         <el-col :span="4">
           <div class="grid-content bg-purple">
             <img src="../assets/logo.png" alt="图片加载失败">
@@ -9,7 +9,7 @@
         </el-col>
         <el-col :span="18">
           <div class="grid-content bg-purple-light">
-            <h2>黑马前端程序员</h2>
+            <h2 class="home-h2">黑马前端程序员</h2>
           </div>
         </el-col>
         <el-col :span="2">
@@ -22,7 +22,7 @@
     <el-container>
       <el-aside class="aside" width="200px">
         <el-col :span="12">
-          <el-menu :unique-opened="true" default-active="2" class="el-menu-vertical-demo">
+          <el-menu :unique-opened="true" default-active="2" :router="true" class="el-menu-vertical-demo">
             <!-- @open="handleOpen"
             @close="handleClose"-->
             <el-submenu index="1">
@@ -30,11 +30,10 @@
                 <i class="el-icon-location"></i>
                 <span>用户管理</span>
               </template>
-              <el-menu-item-group>
-                <el-menu-item index="Users">
-                  <i class="el-icon-menu"></i>用户列表
-                </el-menu-item>
-              </el-menu-item-group>
+              <el-menu-item index="users">
+                <i class="el-icon-menu"></i>
+                <span>用户列表</span>
+              </el-menu-item>
             </el-submenu>
             <el-submenu index="2">
               <template slot="title">
@@ -141,11 +140,18 @@ export default {
 }
 .grid-content {
   text-align: center;
+  line-height: 60px;
 }
 .aside {
   width: 400px;
 }
 .el-menu-vertical-demo {
   width: 200px;
+}
+.home-h2 {
+  color: #ffffff;
+}
+.home-head {
+  text-align: center;
 }
 </style>
